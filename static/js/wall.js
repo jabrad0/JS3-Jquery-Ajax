@@ -19,6 +19,19 @@ function handleFormSubmit(evt) {
     console.log("handleFormSubmit: ", msg);
     addMessage(msg);
 
+    $.get(" http://127.0.0.1:5000/api/wall/list", function(messages) {
+        console.log(messages);
+    } );
+    var messages_list = [];
+    messages_list = messages['messages'];
+    for (var n=0; n< mesage_list.length; n++) {
+            var value = messages_list[0]["message"];
+            console.log(value);
+        }
+
+    
+
+
     // Reset the message container to be empty
     textArea.val("");
 }
