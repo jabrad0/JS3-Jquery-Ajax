@@ -7,39 +7,36 @@ $(document).ready(function () {
     getMessages();
 });
 
-
 /**
  * Handle submission of the form.
  */
 function handleFormSubmit(evt) {
     console.log('click event!', evt)
-    evt.preventDefault();
+    evt.preventDefault(); /* this is a JS method*/
 
-    var textArea = $("#message");
+    /* below, jquery function always returns an array, textArea is a Jquery 
+    object and this search also returns entire HTML line. .val is a jquery function that takes 
+    text from the jquery object (textArea)
+     */
+    var textArea = $("#message"); 
     var msg = textArea.val();
     console.log(msg);
-
-    console.log("handleFormSubmit: ", msg);
-    addMessage(msg);
-
-
+    console.log(typeof msg); /*here msg is a string*/
+    /*console.log("handleFormSubmit: ", msg);*/ /*both of these lines print not sure difference*/
+    addMessage(msg); /*add message function is below*/
+    
     // Reset the message container to be empty
     textArea.val("");
-    
 }
-
 function getMessages() {
     $.get("/api/wall/list", function (result) {
         var msgs = result['messages'];
         $("#message-container").empty(); 
         for (var n=0; n<msgs.length; n++) {
             $("#message-container").prepend("<li class='list-group-item'>" + msgs[n]['message'] + "</li>");
-           
         }
     });
 }
-
-
 /**
  * Makes AJAX call to the server and the message to it.
  */
@@ -47,14 +44,13 @@ function addMessage(msg) {
     $.ajax({
           type: "POST",
           url: "/api/wall/add",
-          data: { 'm': msg }
+          data: { 'm': msg }  /* route ---> got to wall.py */
       })
       .done(function( msg ) {
             console.log("addMessage: ", msg);
             displayResultStatus(msg.result);
             getMessages();
       });
-
     // $.post(
     //     "/api/wall/add",
     //     {'m': msg},
@@ -64,10 +60,7 @@ function addMessage(msg) {
     //         getMessages();
     //     }
     // );
-
 }
-
-
 /**
  * This is a helper function that does nothing but show a section of the
  * site (the message result) and then hide it a moment later.
@@ -91,7 +84,6 @@ function displayResultStatus(resultMsg) {
         // same value. When stashing "this" into a new variable like that,
         // many JS programmers use the name "self"; some others use "that".
         var self = this;
-
         setTimeout(function () {
             $(self).slideUp();
         }, 2000);

@@ -53,11 +53,9 @@ def list_messages():
     result = wall_list()
     return _convert_to_JSON(result)
 
-
 @app.route("/api/wall/add", methods=['POST'])
 def add_message():
     """Add a message and return list of wall messages as JSON."""
-
     # Get the message from the "m" argument passed in the POST.
     # (to get things from a GET response, we've used request.args.get();
     # this is the equivalent for getting things from a POST response)
@@ -72,8 +70,6 @@ def add_message():
 
     else:
         result = wall_add(msg)
-        
-
     return _convert_to_JSON(result)
 
 @app.route("/api/wall/delete")
