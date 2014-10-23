@@ -61,6 +61,7 @@ def add_message():
     # Get the message from the "m" argument passed in the POST.
     # (to get things from a GET response, we've used request.args.get();
     # this is the equivalent for getting things from a POST response)
+    print request.form
     msg = request.form.get('m').strip()
 
     if msg is None:
@@ -71,6 +72,7 @@ def add_message():
 
     else:
         result = wall_add(msg)
+        
 
     return _convert_to_JSON(result)
 

@@ -12,10 +12,12 @@ $(document).ready(function () {
  * Handle submission of the form.
  */
 function handleFormSubmit(evt) {
+    console.log('click event!', evt)
     evt.preventDefault();
 
     var textArea = $("#message");
     var msg = textArea.val();
+    console.log(msg);
 
     console.log("handleFormSubmit: ", msg);
     addMessage(msg);
@@ -42,15 +44,26 @@ function getMessages() {
  * Makes AJAX call to the server and the message to it.
  */
 function addMessage(msg) {
-    $.post(
-        "/api/wall/add",
-        {'m': msg},
-        function (data) {
-            console.log("addMessage: ", data);
-            displayResultStatus(data.result);
+    $.ajax({
+          type: "POST",
+          url: "/api/wall/add",
+          data: { 'm': msg }
+      })
+      .done(function( msg ) {
+            console.log("addMessage: ", msg);
+            displayResultStatus(msg.result);
             getMessages();
-        }
-    );
+      });
+
+    // $.post(
+    //     "/api/wall/add",
+    //     {'m': msg},
+    //     function (data) {
+    //         console.log("addMessage: ", data);
+    //         displayResultStatus(data.result);
+    //         getMessages();
+    //     }
+    // );
 
 }
 
